@@ -58,3 +58,11 @@ ax.plot_surface(X_mesh, Y_mesh, Z)
 ax.set(xlabel='x1', ylabel='x2', zlabel='y', title='Multiple Linear Regression')
 
 plt.show()
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+model_train = ManualLinearRegression()
+model_train.fit(X_train, y_train)
+print(model_train.score(X_test, y_test))
+
+
