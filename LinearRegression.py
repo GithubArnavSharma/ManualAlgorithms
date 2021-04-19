@@ -15,25 +15,35 @@ class ManualLinearRegression:
         
     #Function which can input X and y variables needed for training and update the parameters so future predictions can be made
     def fit(self, X, y):
+        #Since θ(0) will be the y_intercept, it will be multiplied by x(0) which would be 1, so 1 needs to be inserted at the beginning of each data point
         X = [np.insert(x, 0, 1) for x in X]
         
+        #Randomly initialize parameter θ(0) - θ(max) to be multipled by x(0) - x(max)
         self.param_vector = np.random.randn(len(X[0]), 1)
         
+        #Go through the same process for each iteration
         for x in range(self.max_iter):
+            #Each parameter from param_vector will be updated seperately, to their corresponding feature in x
             for j in range(len(self.param_vector)):
+                #Compute the hypothesis' by multiplying each array of X to the parameter vector
                 hyps = np.dot(X, self.param_vector)
                 
                 gradients = []
                 for i in range(len(hyps)):
+                    #The gradient of the loss is calculated by multiplying the difference between the hypothesis and actual y by the corresponding feature
                     gradient = (hyps[i] - y[i]) * X[i][j]
                     gradients.append(gradient)
+                #Find the cost by multiplying the learning rate by the average of all the gradients
                 cost_der = self.learning_rate * np.mean(gradients)
                 
+                #Subtract the individual parameter by the calculated cost
                 self.param_vector[j] -= cost_der
         
     #Function that can input a unique X and output a prediction using the parameters learned from .fit
     def predict(self, X):
+        #For each arrat of X, insert 1 beforehand to be the x(0) multiplied by θ(0)
         X = [np.insert(x, 0, 1) for x in X]
+        #Make the prediction by multiplying each array of X by the parameters calculated
         prediction = np.dot(X, self.param_vector)
         return prediction
 
