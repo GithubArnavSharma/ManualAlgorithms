@@ -25,7 +25,7 @@ class ManualKNeighbors:
         self.y = the_y
 
     #The function for predicting y based on x
-    def predict(self, x_pred):
+    def predict_one(self, x_pred):
         #Find the distance between the pred vector and the data x 
         all_distances = [distance_vector(x_pred, self.x[i]) for i in range(len(self.x))]
         #Get the n_neighbors closest vectors from self.x
@@ -47,12 +47,12 @@ class ManualKNeighbors:
         return the_value
 
     #Function that can predict multiple x_preds
-    def predict_multiple(self, x_preds):
-        return [self.predict(x_vector) for x_vector in x_preds]
+    def predict(self, x_preds):
+        return [self.predict_one(x_vector) for x_vector in x_preds]
 
     #Function that can determine the accuracy of the model based on how much it got correct
     def score(self, x_test, y_test):
-        predictions = [self.predict(test_vector) for test_vector in x_test]
+        predictions = self.predict(x_test)
         amount_correct = [predictions[i] == y_test[i] for i in range(len(predictions))].count(True)
         return amount_correct/len(predictions)
 
