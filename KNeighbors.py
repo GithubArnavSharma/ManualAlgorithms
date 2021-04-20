@@ -51,7 +51,7 @@ class ManualKNeighbors:
         return [self.predict(x_vector) for x_vector in x_preds]
 
     #Function that can determine the accuracy of the model based on how much it got correct
-    def accuracy(self, x_test, y_test):
+    def score(self, x_test, y_test):
         predictions = [self.predict(test_vector) for test_vector in x_test]
         amount_correct = [predictions[i] == y_test[i] for i in range(len(predictions))].count(True)
         return amount_correct/len(predictions)
@@ -66,4 +66,4 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 #Test the model accuracy on X_test and y_test based on training it from X_train and y_train
 model = ManualKNeighbors(1)
 model.fit(X_train, y_train)
-print(model.accuracy([X_test[0]], [y_test[0]])) #Accuracy is around 97%
+print(model.score([X_test[0]], [y_test[0]])) #Accuracy is around 97%
